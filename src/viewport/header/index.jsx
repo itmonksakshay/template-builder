@@ -9,9 +9,8 @@ import {
   useDisclosure
 } from "@chakra-ui/react";
 import { HamburgerIcon } from "@chakra-ui/icons";
-import Logo from "../assets/Logo.png";
-import { ExitIcon, Icon, MobileIcon, PreviewIcon, RedoIcon, SaveIcon, SettingsBuilderIcon, UndoIcon } from "../themes/icons";
-import { ContainerComponent } from "../components";
+import Logo from "../../assets/Logo.png";
+import { ExitIcon, Icon, MobileIcon, PreviewIcon, RedoIcon, SaveIcon, SettingsBuilderIcon, UndoIcon } from "../../themes/icons";
 
 const Header = (props) => {
   const { isOpen, onOpen, onClose } = useDisclosure();

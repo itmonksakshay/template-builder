@@ -1,4 +1,5 @@
 import React, { useState, ReactNode, useMemo } from 'react';
+import { useEditor } from "@craftjs/core";
 import {
     Box,
     Flex,
@@ -8,14 +9,19 @@ import {
     Stack
 } from '@chakra-ui/react';
 import SideMenu from './menu';
-import { ElementIcon, LayoutIcon, OtherIcon } from '../themes/icons';
-import { SettingsPanel } from '../components/settingsPanel';
+import { ElementIcon, LayoutIcon, OtherIcon } from '../../themes/icons';
+import { SettingsPanel } from '../settingPanel/settingsPanel';
 
-function Sidebar({ LinkItems }) {
+function Sidebar() {
     const [show, setShow] = useState(false);
     const [value, setValue] = useState("")
     const [dummy,setDummy]=useState()
     const [stylee, setStyle] = useState();
+
+    const LinkItems =[{title: [{icon: <LayoutIcon />, name:'Layout'} ,{icon: <ElementIcon />, name: 'Element'},{icon: <OtherIcon />,name: 'Other'}], 
+layout: [{id: 'section', first : 'Section'},{id: 'rows', second: 'Rows'},{id: 'columns', third: 'Columns'},{id: 'background', 'fourth': 'Background'}],
+element: [{id: 'text', first : 'Text'}, {id: 'media' , second: 'Media'},{id: 'form', third: 'Form'}], 
+other:[{id: 'misc',first : 'Misc'}]}];
 
 
     const handleSideMenu = (e, id) => {
@@ -33,13 +39,33 @@ function Sidebar({ LinkItems }) {
         }
     }
  
+    const { actions, selected, isEnabled } = useEditor((state, query) => {
 
+        const currentNodeId = query.getEvent('selected').last();
+        let selected;
+        if (currentNodeId) {
+          selected = {
+            id: currentNodeId,
+            name: state.nodes[currentNodeId].data.name,
+            settings:
+              state.nodes[currentNodeId].related &&
+              state.nodes[currentNodeId].related.settings,
+          };
+        }
+    
+        return {
+          selected,
+          isEnabled: state.options.enabled,
+        };
+      });
+
+      
    
     return (
         <>
             <Box
                 bg="#155871"
-                width="10%"
+                width="100%"
                 borderRight="1px"
                 borderRightColor={useColorModeValue('gray.200', 'gray.700')}
                 minH="full">

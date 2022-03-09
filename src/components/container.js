@@ -10,7 +10,6 @@ export const ContainerComponent = ({ background, width, padding, children}) => {
   return (
     <Container 
         maxW={width}
-        ref={(ref) => connect(drag(ref))}
         h='100%'
         bg={background}
         m='2'
